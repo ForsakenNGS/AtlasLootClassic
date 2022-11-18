@@ -783,12 +783,14 @@ function Favourites:CountFavouritesByList(addonName, contentName, boss, dif, inc
     local items, tableType, diffData = ItemDB:GetItemTable(addonName, contentName, boss, dif)
     for l, listData in pairs(self.db.lists) do
         local listName = listData.__name
-        for i = 1, #items do
-            local item = items[i]
-            if type(item[2]) == "number" then
-                local itemID = item[2]
-                if listData[itemID] and (includeObsolete or not self:IsItemEquippedOrObsolete(itemID, l)) then
-                    result[listName] = (result[listName] or 0) + 1
+        if listName ~= nil then
+            for i = 1, #items do
+                local item = items[i]
+                if type(item[2]) == "number" then
+                    local itemID = item[2]
+                    if listData[itemID] and (includeObsolete or not self:IsItemEquippedOrObsolete(itemID, l)) then
+                        result[listName] = (result[listName] or 0) + 1
+                    end
                 end
             end
         end
